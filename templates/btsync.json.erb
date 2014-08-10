@@ -1,0 +1,24 @@
+{
+  "device_name": "<%= @btsync.device_name %>",
+  "listening_port" : <%= %>,
+  "storage_path" : "/var/lib/btsync",
+  "pid_file" : "/var/run/btsync/btsync.pid",
+  "check_for_updates" : false,
+  "use_upnp" : false,
+  "download_limit" : 0,
+  "upload_limit" : 0,
+  "webui" : { },
+  "folder_rescan_interval" : 6,
+  "shared_folders" : [
+    {
+      "secret" : "AVC67CQKGITLCHHXVB2IEWELPP4V7QOUX",
+      "dir" : "/media/DRBD",
+      "use_relay_server" : false,
+      "use_tracker" : false,
+      "use_dht" : false,
+      "search_lan" : true,
+      "use_sync_trash" : false,
+      "known_hosts" : [ "10.1.1.123:8888" ]
+    }
+  ]
+}
