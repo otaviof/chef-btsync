@@ -51,11 +51,10 @@ action :share do
     end
   end
 
-  #
-  # TODO
-  #  * How to inform more than one share per node_name?;
-  #
+  # which will actually also trigger service restart
   render_configuration()
+
+  new_resource.updated_by_last_action(true)
 end
 
 action :unshare do
@@ -72,6 +71,14 @@ def render_configuration()
     :listening_port => node[:btsync][:listeningport],
     :storage_path => node[:btsync][:storagepath],
     :folder_rescan_interval => node[:btsync][:folderrescaninterval],
+    # assuming some defaults here
+    :pid_file => "/var/run/btsync/btsync.pid",
+    :check_for_updates =>  false,
+    :use_upnp => false,
+    :download_limit => 0,
+    :upload_limit => 0,
+    :webui => { },
+    # the volumes (or folders) we're sharing
     :shared_folders => [],
   }
 
@@ -88,11 +95,11 @@ def render_configuration()
     end
   end
 
-  log "BtSync configuration: #{JSON.pretty_generate(btsync_config)}"
-
-  template "/var/tmp/btsync.json" do
+  template "/etc/btsync/btsync.json" do
+    source "btsync.json.erb"
     owner node[:btsync][:user]
     group node[:btsync][:group]
+    cookbook new_resource.cookbook
     variables( { :btsync => btsync_config })
     #
     # TODO
@@ -116,7 +123,6 @@ def load_shared_folder(share_name)
     :use_sync_trash => share["use_sync_trash"],
     :known_hosts => [],
   }
-  # log "share #{JSON.pretty_generate(share["known_hosts"].keys)}"
 
   # analizying which hosts are on this same share name
   share["known_hosts"].each() do |key, value|

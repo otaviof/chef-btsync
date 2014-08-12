@@ -6,7 +6,9 @@ package 'btsync' do
   action :install
 end
 
-[ '/etc/btsync', node[:btsync][:storagepath] ].each do |dir_name|
+[ '/etc/btsync',
+  node[:btsync][:storagepath],
+  'var/run/btsync' ].each do |dir_name|
   directory dir_name do
     mode 0755
     owner node[:btsync][:user]
