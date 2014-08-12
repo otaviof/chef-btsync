@@ -1,14 +1,14 @@
 {
   "device_name": "<%= @btsync.device_name %>",
-  "listening_port" : <%= %>,
-  "storage_path" : "/var/lib/btsync",
+  "listening_port" : <%= @btsync.listening_port %>,
+  "storage_path" : "<%= @btsync.storage_path %>",
   "pid_file" : "/var/run/btsync/btsync.pid",
   "check_for_updates" : false,
   "use_upnp" : false,
   "download_limit" : 0,
   "upload_limit" : 0,
   "webui" : { },
-  "folder_rescan_interval" : 6,
+  "folder_rescan_interval" : <%= @btsync.folder_rescan_interval %>,
   "shared_folders" : [
     {
       "secret" : "AVC67CQKGITLCHHXVB2IEWELPP4V7QOUX",

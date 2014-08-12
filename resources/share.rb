@@ -1,6 +1,9 @@
 #### Resource: btsync_share #################################################
 #
 
+actions :share, :unshare
+default_action :share
+
 attribute :share_name,
   :kind_of => String,
   :name_attribute => true
@@ -14,6 +17,10 @@ attribute :dir,
   :required => true
 
 attribute :use_relay_server,
+  :kind_of => [TrueClass, FalseClass],
+  :default => false
+
+attribute :use_tracker,
   :kind_of => [TrueClass, FalseClass],
   :default => false
 
