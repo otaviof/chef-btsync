@@ -18,22 +18,24 @@ should be present and RPM name.
 ### Package
 - `btsync`: Local install of BtSync tool;
 
-`btsync` Providers
-------------------
+`btsync` Provider
+-----------------
 
 ### Share (`btsync_share`):
 
-Aims to define a simple interface to synchronize a given folder witch another
-node that calls for the same provider "stuff". For instance:
+Defines a simple interface to synchronize a given folder with network peers,
+the key to have data shared between them using this provider is the name
+informed to "btsync_share" provider, which the other nodes must call for the
+same share name. For instance the following, called "stuff":
 
 ```ruby
 btsync_share "stuff" do
-  dir "/media/stuff"
+  dir "/media/stuff_dir"
   action :share
 end
 ```
 
-It will create a data-bag called `btsync` and another item inside called
+It will create a data-bag called `btsync`, and another item inside called
 `stuff` that is how the other nodes will notice which hosts are sharing this
 data.
 
@@ -55,14 +57,15 @@ More attributes may be informed to this provider:
 
 Some of it's available configuration options are hard-coded on this provider,
 since `btsync` uses a JSON configuration file format, it's very handy to export
-it straight away from a hash, defined internally.
+it straight away from a Ruby hash defined internally.
 
-Usage
------
+Install Recipe
+--------------
+
 #### btsync::install
 
-Installs RPM that provides `btsync` and creates the basic directories to run
-this service. Therefore, include `btsync` in your node `run_list`:
+Installs the RPM that provides `btsync` and creates the basic directories to
+run this service. Therefore, include `btsync::install` in your node `run_list`:
 
 ```json
 {
