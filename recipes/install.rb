@@ -6,8 +6,8 @@ package 'btsync' do
   action :install
 end
 
-[ '/etc/btsync',
-  node[:btsync][:storagepath],
+[ node[:btsync][:storagepath],
+  '/etc/btsync',
   'var/run/btsync' ].each do |dir_name|
   directory dir_name do
     mode 0755
@@ -15,6 +15,11 @@ end
     group node[:btsync][:group]
     action :create
   end
+end
+
+service "btsync" do
+  supports :restart => true, :start => true, :stop => true, :reload => true
+  action :nothing
 end
 
 # EOF

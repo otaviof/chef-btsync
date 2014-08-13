@@ -58,6 +58,12 @@ action :share do
 end
 
 action :unshare do
+  #
+  # TODO
+  #  * Remove host from known_hosts at given share name;
+  #  * If no known_hosts is found, share name can be dropped;
+  #  * If no shares are found, service can be stopped and disabled;
+  #
   log "Implement-me!"
 end
 
@@ -95,16 +101,15 @@ def render_configuration()
     end
   end
 
+  # rendering new configuraiton and restart btsync service
   template "/etc/btsync/btsync.json" do
+    cookbook new_resource.cookbook
     source "btsync.json.erb"
     owner node[:btsync][:user]
     group node[:btsync][:group]
-    cookbook new_resource.cookbook
     variables( { :btsync => btsync_config })
-    #
-    # TODO
-    #  * restart service btsync and registering on template data modification;
-    #
+    notifies :enable, "service[btsync]"
+    notifies :restart, "service[btsync]", :delayed
   end
 end
 
