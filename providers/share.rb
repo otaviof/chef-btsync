@@ -5,6 +5,11 @@ require "chef/data_bag"
 require "json"
 
 action :share do
+  #
+  # TODO
+  #  * check if 'dir' exists and die if it doesn't;
+  #
+
   # a new btsync databag if you don't have one yet
   if not Chef::DataBag.list.key?("btsync")
     begin

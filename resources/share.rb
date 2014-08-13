@@ -1,5 +1,9 @@
 #### Resource: btsync_share #################################################
 #
+# TODO
+#  * Add options to inform that this volume is ready only, so we may derivate
+#    a read-only key based on the master secret key;
+#
 
 actions :share, :unshare
 default_action :share
